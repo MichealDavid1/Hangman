@@ -48,6 +48,6 @@ while choose_to_play == "play":
     else:
         print("You lost!")
     print()
-    choose_to_play = input('Type "play" to play the game, "exit" to quit: ')
+    choose_to_play = input('Type "play" to play the game again, "exit" to quit: ')
     while choose_to_play not in choice:
-        choose_to_play = input('Type "play" to play the game, "exit" to quit: ')
+        choose_to_play = input('Type "play" to play the game again, "exit" to quit: ')
