@@ -1,53 +1,49 @@
 import random
 import string
-
-print("H A N G M A N")
-choice = ["play", "exit"]
-choose_to_play = input('Type "play" to play the game, "exit" to quit: ')
-while choose_to_play not in choice:
-    choose_to_play = input('Type "play" to play the game, "exit" to quit: ')
-while choose_to_play == "play":
-    list_of_word = ['python', 'java', 'kotlin', 'javascript']
-    secret = random.choice(list_of_word)
-    x = len(secret)
-    hint = []
-    for i in range(x):
-        hint.append("-")
-        i += 1
-    hint = "".join(hint)
-    game_period = len(set(secret))
-    letter = ""
-    j = 1
-    guessed_letters = []
-    while "-" in hint:
-        hint = [x if x == letter or x in hint else "-" for x in secret]
-        hint = "".join(hint)
-        if "-" not in hint:
-            break
-        print()
-        print(hint)
-        letter = input("Input a letter: ")
-        if len(letter) > 1:
-            print("You should input a single letter")
-        elif letter not in string.ascii_lowercase:
-            print("Please enter a lowercase English letter")
-        elif letter in hint or letter in guessed_letters:
-            print("You've already guessed this letter")
-        while (letter not in secret and letter in string.ascii_lowercase) and j <= 8 and letter not in guessed_letters:
-            print("That letter doesn't appear in the word")
-            j += 1
-            break
-        if (letter not in secret and letter in string.ascii_lowercase) and j > 8 and (letter not in guessed_letters):
-            break
-        guessed_letters.append(letter)
-    if "-" not in hint:
-        print()
-        print(hint)
-        print("You guessed the word!")
-        print("You survived!")
-    else:
-        print("You lost!")
-    print()
-    choose_to_play = input('Type "play" to play the game again, "exit" to quit: ')
-    while choose_to_play not in choice:
-        choose_to_play = input('Type "play" to play the game again, "exit" to quit: ')
+print('H A N G M A N')
+print('')
+results = []
+decision = input('Type "play" to play the game, "results" to show the scoreboard, and "exit" to quit:')
+while decision != "exit":
+    if decision == "results":
+        win = results.count('win')
+        lost = results.count('lost')
+        print(f'You won: {win} times.')
+        print(f'You lost: {lost} times.')
+    elif decision == "play":
+        rand = ['python', 'java', 'swift', 'javascript']
+        word = random.choice(rand)
+        hint = []
+        guessed = []
+        for i in range(len(word)):
+            hint.append('-')
+        i = 1
+        while i <= 8:
+            w = ''.join(hint)
+            if '-' not in hint:
+                results.append('win')
+                print(f'You guessed the word {w}!')
+                print('You survived!')
+                break
+            else:
+                print(w)
+            guess = input('Input a letter: ')
+            if len(guess) != 1:
+                print('Please, input a single letter.')
+            elif guess not in string.ascii_lowercase:
+                print('Please, enter a lowercase letter from the English alphabet.')
+            elif guess in hint or guess in guessed:
+                print("You've already guessed this letter.")
+            elif guess not in word and guess not in hint:
+                print("That letter doesn't appear in the word")
+                if i == 8:
+                    results.append('lost')
+                    print('You lost!')
+                    break
+                i += 1
+            else:
+                hint = [x if x == guess or x in hint else "-" for x in word]
+            guessed.append(guess)
+            if '-' in hint:
+                print('')
+    decision = input('Type "play" to play the game, "results" to show the scoreboard, and "exit" to quit:')
